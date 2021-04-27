@@ -1,7 +1,12 @@
 <template>
   <div class="base-search">
-    <input type="text" class="base-search__input" v-model.trim="getValue" />
-    <button class="base-search__button">Найти</button>
+    <input
+      type="text"
+      class="base-search__input"
+      v-model.trim="getValue"
+      @keyup.enter="onKeyup"
+    />
+    <button class="base-search__button" @click="onClick">Найти</button>
   </div>
 </template>
 
@@ -22,6 +27,14 @@ export default {
       set(value) {
         this.$emit("setValue", value);
       },
+    },
+  },
+  methods: {
+    onClick() {
+      this.$emit("click");
+    },
+    onKeyup() {
+      this.$emit("keyup");
     },
   },
 };

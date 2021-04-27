@@ -5,12 +5,14 @@
     </base-title>
     <base-search
       class="view-users__input"
-      :value="users"
-      @setValue="setUsers"
+      :value="userName"
+      @setValue="setUserName"
+      @click="searchUsers"
+      @keyup="searchUsers"
     ></base-search>
     <div class="view-users__wrapper">
-      <user-layout></user-layout>
-      <user-card></user-card>
+      <user-layout :userList="userList" :userAmount="userAmount"></user-layout>
+      <router-view :user="userCard" :key="userCard.id"></router-view>
     </div>
   </section>
 </template>
@@ -19,23 +21,35 @@
 import BaseSearch from "../components/Base/BaseSearch";
 import BaseTitle from "../components/Base/BaseTitle";
 import UserLayout from "../components/UserLayout";
-import UserCard from "../components/UserCard";
 export default {
   name: "ViewUsers",
   components: {
     BaseSearch,
     BaseTitle,
-    UserCard,
     UserLayout,
   },
   data() {
     return {
-      users: "",
+      userName: "",
     };
   },
   methods: {
-    setUsers(value) {
-      this.users = value;
+    setUserName(userName) {
+      this.userName = userName;
+    },
+    searchUsers() {
+      return this.$store.dispatch("getUserList", this.userName);
+    },
+  },
+  computed: {
+    userList() {
+      return this.$store.state.Users.users;
+    },
+    userAmount() {
+      return this.$store.state.Users.amount;
+    },
+    userCard() {
+      return this.$store.state.Users.user;
     },
   },
 };
@@ -48,6 +62,10 @@ export default {
   &__wrapper {
     display: flex;
     justify-content: space-between;
+
+    padding: 0 50px;
+
+    height: 500px;
   }
 
   &__input {
