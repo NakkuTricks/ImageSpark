@@ -15,12 +15,5 @@ export default {
   max-width: 1250px;
   width: 100%;
   height: 80%;
-  overflow-y: scroll;
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-  }
 }
 </style>
