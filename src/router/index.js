@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 
 import ViewHome from "../views/ViewHome";
 import ViewUsers from "../views/ViewUsers";
-import UserCard from "../components/UserCard";
+import UserCard from "../views/UserCard";
 
 Vue.use(VueRouter);
 
