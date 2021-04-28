@@ -30,9 +30,12 @@ export default {
 .user-layout-list {
   display: flex;
   flex-direction: column;
-
-  padding: 15px 20px;
-
-  overflow-y: auto;
+  padding: 15px 25px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <li class="user-layout-list-item">
     <router-link
+      class="user-layout-list-item__link"
       :to="{ name: 'userCard', params: { userLogin: `${user.login}` } }"
     >
       {{ user.login }}
@@ -24,6 +25,13 @@ export default {
 
 <style lang="scss">
 .user-layout-list-item {
-  margin-bottom: 10px;
+  display: flex;
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  padding: 5px 0;
+
+  &__link {
+    width: 100%;
+  }
 }
 </style>

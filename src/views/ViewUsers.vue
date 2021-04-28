@@ -9,10 +9,14 @@
       @setValue="setUserName"
       @click="searchUsers"
       @keyup="searchUsers"
+      :placeholder="placeholder"
     ></base-search>
     <div class="view-users__wrapper">
       <user-layout :userList="userList" :userAmount="userAmount"></user-layout>
-      <router-view :user="userCard" :key="userCard.id"></router-view>
+      <router-view
+        :user="userCard"
+        :key="this.$route.params.userLogin"
+      ></router-view>
     </div>
   </section>
 </template>
@@ -31,6 +35,7 @@ export default {
   data() {
     return {
       userName: "",
+      placeholder: "Введите псевдоним",
     };
   },
   methods: {
@@ -38,7 +43,8 @@ export default {
       this.userName = userName;
     },
     searchUsers() {
-      return this.$store.dispatch("getUserList", this.userName);
+      this.$store.dispatch("getUserList", this.userName);
+      this.userName = "";
     },
   },
   computed: {
@@ -57,15 +63,15 @@ export default {
 
 <style lang="scss">
 .view-users {
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
 
   &__wrapper {
     display: flex;
     justify-content: space-between;
-
     padding: 0 50px;
-
-    height: 500px;
+    height: calc(100% - 75px);
   }
 
   &__input {
