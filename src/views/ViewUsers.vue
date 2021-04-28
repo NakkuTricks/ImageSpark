@@ -12,7 +12,13 @@
       :placeholder="placeholder"
     ></base-search>
     <div class="view-users__wrapper">
-      <user-layout :userList="userList" :userAmount="userAmount"></user-layout>
+      <user-layout
+        :userList="userList"
+        :userAmount="userAmount"
+        @sortUsersAscending="sortUsersAscending"
+        @sortUsersDescending="sortUsersDescending"
+        @downloadMore="downloadMore"
+      ></user-layout>
       <router-view
         :user="userCard"
         :key="this.$route.params.userLogin"
@@ -34,6 +40,7 @@ export default {
   },
   data() {
     return {
+      currentPage: 1,
       userName: "",
       placeholder: "Введите псевдоним",
     };
@@ -41,10 +48,28 @@ export default {
   methods: {
     setUserName(userName) {
       this.userName = userName;
+      localStorage.setItem("userName", JSON.stringify(this.userName));
     },
     searchUsers() {
-      this.$store.dispatch("getUserList", this.userName);
-      this.userName = "";
+      if (this.userName) {
+        let userName = JSON.parse(localStorage.getItem("userName"));
+        this.$store.dispatch("getUserList", userName, this.currentPage);
+        this.userName = "";
+        this.currentPage++;
+      } else {
+        alert("Пожалуйста, введите псевдоним пользователя");
+      }
+    },
+    downloadMore() {
+      this.searchUsers();
+    },
+    sortUsersAscending() {
+      const userName = JSON.parse(localStorage.getItem("userName"));
+      this.$store.dispatch("getUsersAscending", userName);
+    },
+    sortUsersDescending() {
+      const userName = JSON.parse(localStorage.getItem("userName"));
+      this.$store.dispatch("getUsersDescending", userName);
     },
   },
   computed: {
