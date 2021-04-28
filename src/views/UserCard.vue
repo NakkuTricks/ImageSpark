@@ -28,7 +28,7 @@ export default {
   },
   created() {
     const login = this.$route.params.userLogin;
-    this.$store.dispatch("getUserCard", login);
+    this.$store.dispatch("getUserByLogin", login);
   },
 };
 </script>
