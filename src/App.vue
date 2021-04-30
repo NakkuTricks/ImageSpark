@@ -28,5 +28,22 @@ export default {
   height: 100vh;
 
   padding: 0 35px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  &::after {
+    display: block;
+    content: "";
+    background-image: url("./assets/images/loupe.svg");
+    background-repeat: no-repeat;
+    width: 30%;
+    height: 50%;
+    position: absolute;
+    z-index: -1;
+    right: -15%;
+    bottom: -24%;
+  }
 }
 </style>
