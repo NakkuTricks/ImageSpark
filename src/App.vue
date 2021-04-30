@@ -50,7 +50,7 @@ export default {
       height: 180px;
 
       right: -15%;
-      bottom: 145px;
+      bottom: 0;
     }
   }
 

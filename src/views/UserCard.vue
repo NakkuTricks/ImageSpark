@@ -49,6 +49,10 @@ export default {
   justify-content: center;
   align-items: center;
 
+  @media (max-width: 1150px) {
+    flex-direction: column;
+  }
+
   @media (max-width: 500px) {
     flex-direction: column;
   }
@@ -71,7 +75,7 @@ export default {
       transform: scale(1.05);
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 1150px) {
       margin-right: 0;
       margin-bottom: 10px;
 

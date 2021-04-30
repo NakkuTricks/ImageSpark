@@ -117,7 +117,7 @@ export default {
   }
 
   &__title {
-    @media (max-width: 500px) {
+    @media (max-width: 1150px) {
       margin-bottom: 15px;
       font-size: 30px;
     }

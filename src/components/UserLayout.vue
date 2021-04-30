@@ -118,12 +118,17 @@ export default {
 
 <style lang="scss">
 .user-layout {
-  min-width: 400px;
+  max-width: 400px;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
 
   margin-right: 10%;
+
+  @media (max-width: 1150px) {
+    margin-right: 40px;
+  }
 
   @media (max-width: 500px) {
     min-width: auto;
