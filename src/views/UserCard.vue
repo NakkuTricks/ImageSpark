@@ -1,10 +1,16 @@
 <template>
   <article class="user-card">
-    <div class="user-card__avatar">
+    <a
+      class="user-card__avatar"
+      :href="user.html_url"
+      target="_blank"
+      title="Ссылка на гитхаб аккаунт"
+      rel="noopener noreferrer"
+    >
       <img :src="user.avatar_url" alt="Аватар пользователя" />
-      {{ user.login }}
-    </div>
+    </a>
     <ul class="user-card__list">
+      <li class="user-card__item">Логин пользователя: {{ user.login }}</li>
       <li class="user-card__item">
         Количество публичных репозиториев: {{ user.public_repos }}
       </li>
@@ -35,20 +41,31 @@ export default {
 
 <style lang="scss">
 .user-card {
-  max-width: 400px;
+  max-width: 600px;
   width: 100%;
 
   display: flex;
-  flex-direction: column;
+
   justify-content: center;
   align-items: center;
 
   &__avatar {
     width: 250px;
-    overflow: hidden;
-    border-radius: 50%;
+
     display: flex;
-    margin-bottom: 25px;
+
+    overflow: hidden;
+
+    margin-right: 10%;
+
+    border: 10px solid black;
+    border-radius: 50%;
+
+    transition: 200ms ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
   &__list {
@@ -58,7 +75,6 @@ export default {
 
   &__item {
     margin-bottom: 10px;
-    text-align: center;
     border-bottom: 1px solid black;
     padding: 10px 0;
 
