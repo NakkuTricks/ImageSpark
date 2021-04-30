@@ -3,7 +3,7 @@
     <user-layout-list-item
       :user="user"
       v-for="user in userList"
-      :key="user.id"
+      :key="user.login"
     ></user-layout-list-item>
   </ul>
 </template>
@@ -30,9 +30,14 @@ export default {
 .user-layout-list {
   display: flex;
   flex-direction: column;
-  padding: 15px 25px;
-  overflow-y: scroll;
+
+  max-height: 400px;
+
+  margin-bottom: 10px;
+
+  overflow-y: auto;
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
     width: 0;
     height: 0;

@@ -27,8 +27,20 @@ export default {
 .user-layout-list-item {
   display: flex;
   margin-bottom: 20px;
-  border-bottom: 1px solid black;
-  padding: 5px 0;
+  padding: 5px 10px;
+  background: linear-gradient(
+    90deg,
+    #f5d7ffb0 0,
+    #c9f5ffb0 52.75%,
+    #6bcdff85 102.3%
+  );
+  border-radius: 10px;
+
+  transition: 200ms ease;
+
+  &:hover {
+    transform: scale(0.95);
+  }
 
   &__link {
     width: 100%;
