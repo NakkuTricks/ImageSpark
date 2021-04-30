@@ -2,21 +2,51 @@ import { API_URL } from "@/constants";
 
 export default {
   state: {
-    users: JSON.parse(localStorage.getItem("users") || "[]"),
+    userList: JSON.parse(localStorage.getItem("userList") || "[]"),
     user: JSON.parse(localStorage.getItem("user") || "{}"),
     amount: JSON.parse(localStorage.getItem("users-amount") || "0"),
   },
   actions: {
-    getUserList({ commit }, userName, currentPage) {
-      // eslint-disable-next-line prettier/prettier
-      fetch(`${API_URL}/search/users?q=${userName}&page=${currentPage}&per_page=10`, {
+    getUserList({ commit }, userName) {
+      fetch(`${API_URL}/search/users?q=${userName}&page=1&per_page=10`, {
+        headers: {
+          Accept: "application/vnd.github.v3+json",
+        },
+      })
+        .then((userList) => {
+          if (userList.ok) {
+            return userList.json();
+          } else {
+            return alert("Превышен лимит запросов");
+          }
+        })
+        .then((userList) => {
+          if (userList.items.length) {
+            localStorage.setItem("userName", JSON.stringify(userName));
+            return commit("setUserListToState", userList);
+          } else {
+            return alert("Пользователь не найден");
+          }
+        })
+        .catch((error) => console.log(error));
+    },
+    getUserPerPage({ commit }, [userName, currentPage]) {
+      fetch(
+        `${API_URL}/search/users?q=${userName}&page=${currentPage}&per_page=10`,
+        {
           headers: {
             Accept: "application/vnd.github.v3+json",
           },
         }
       )
-        .then((users) => users.json())
-        .then((users) => commit("setUserListToState", users))
+        .then((userList) => {
+          if (userList.ok) {
+            return userList.json();
+          } else {
+            return alert("Превышен лимит запросов");
+          }
+        })
+        .then((userList) => commit("setUserPerPage", userList))
         .catch((error) => console.log(error));
     },
     getUserByLogin({ commit }, userLogin) {
@@ -26,63 +56,52 @@ export default {
         },
       })
         .then((user) => user.json())
-        .then((user) => commit("setUserToState", user))
+        .then((user) => commit("setUserCardToState", user))
         .catch((error) => console.log(error));
     },
-    getUsersAscending({ commit }, userName) {
-      // eslint-disable-next-line prettier/prettier
-      fetch(`${API_URL}/search/users?q=${userName}&sort=repositories&order=desc`, {
+    getUsersBySort({ commit }, [userName, currentPage, sort]) {
+      fetch(
+        `${API_URL}/search/users?q=${userName}&page=${currentPage}&per_page=10&sort=repositories&order=${sort}`,
+        {
           headers: {
             Accept: "application/vnd.github.v3+json",
           },
         }
       )
-        .then((users) => users.json())
-        .then((users) => commit("setUsersAscending", users))
-        .catch((error) => console.log(error));
-    },
-    getUsersDescending({ commit }, userName) {
-      // eslint-disable-next-line prettier/prettier
-      fetch(`${API_URL}/search/users?q=${userName}&sort=repositories&order=asc`, {
-          headers: {
-            Accept: "application/vnd.github.v3+json",
-          },
-        }
-      )
-        .then((users) => users.json())
-        .then((users) => commit("setUsersDescending", users))
+        .then((userList) => {
+          if (userList.ok) {
+            return userList.json();
+          } else {
+            return alert("Превышен лимит запросов");
+          }
+        })
+        .then((userList) => commit("setSortUsers", userList))
         .catch((error) => console.log(error));
     },
   },
   mutations: {
     setUserListToState(state, users) {
-      const user = users.items;
-      state.users = user;
+      state.userList = users.items;
       state.amount = Number(users.total_count);
 
-      localStorage.setItem("users", JSON.stringify(state.users));
+      localStorage.setItem("userList", JSON.stringify(state.userList));
       localStorage.setItem("users-amount", JSON.stringify(state.amount));
     },
-    setUserToState(state, user) {
+    setUserPerPage(state, userPerPage) {
+      state.userList = userPerPage.items;
+      localStorage.setItem("userList", JSON.stringify(state.userList));
+    },
+    setUserCardToState(state, user) {
       state.user = user;
       localStorage.setItem("user", JSON.stringify(state.user));
     },
-    setUsersAscending(state, users) {
+    setSortUsers(state, users) {
       const user = users.items;
-      state.users = user;
+      state.userList = user;
       state.amount = Number(users.total_count);
 
-      localStorage.setItem("users", JSON.stringify(state.users));
+      localStorage.setItem("userList", JSON.stringify(state.userList));
       localStorage.setItem("users-amount", JSON.stringify(state.amount));
     },
-    setUsersDescending(state, users) {
-      const user = users.items;
-      state.users = user;
-      state.amount = Number(users.total_count);
-
-      localStorage.setItem("users", JSON.stringify(state.users));
-      localStorage.setItem("users-amount", JSON.stringify(state.amount));
-    }
   },
-  getters: {},
 };
