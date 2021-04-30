@@ -1,7 +1,7 @@
 <template>
   <section class="view-users">
     <base-title>
-      <template v-slot>Поиск пользователей:</template>
+      <template v-slot>Поиск пользователей github по логину:</template>
     </base-title>
     <base-search
       class="view-users__input"
@@ -15,9 +15,12 @@
       <user-layout
         :userList="userList"
         :userAmount="userAmount"
+        :currentPage="currentPage"
         @sortUsersAscending="sortUsersAscending"
         @sortUsersDescending="sortUsersDescending"
-        @downloadMore="downloadMore"
+        @prevPage="prevUserPage"
+        @nextPage="nextUserPage"
+        v-if="userList.length"
       ></user-layout>
       <router-view
         :user="userCard"
@@ -40,41 +43,57 @@ export default {
   },
   data() {
     return {
-      currentPage: 1,
+      currentPage: JSON.parse(localStorage.getItem("current-page") || "1"),
       userName: "",
-      placeholder: "Введите псевдоним",
+      placeholder: "Введите логин",
     };
   },
   methods: {
     setUserName(userName) {
       this.userName = userName;
-      localStorage.setItem("userName", JSON.stringify(this.userName));
     },
     searchUsers() {
       if (this.userName) {
-        let userName = JSON.parse(localStorage.getItem("userName"));
-        this.$store.dispatch("getUserList", userName, this.currentPage);
+        this.$store.dispatch("getUserList", this.userName);
         this.userName = "";
-        this.currentPage++;
+        this.currentPage = 1;
+        localStorage.setItem("current-page", this.currentPage);
       } else {
         alert("Пожалуйста, введите псевдоним пользователя");
       }
     },
-    downloadMore() {
-      this.searchUsers();
+    prevUserPage() {
+      this.currentPage--;
+      localStorage.setItem("current-page", this.currentPage);
+      let userName = JSON.parse(localStorage.getItem("userName"));
+      this.$store.dispatch("getUserPerPage", [userName, this.currentPage]);
+    },
+    nextUserPage() {
+      this.currentPage++;
+      localStorage.setItem("current-page", this.currentPage);
+      let userName = JSON.parse(localStorage.getItem("userName"));
+      this.$store.dispatch("getUserPerPage", [userName, this.currentPage]);
     },
     sortUsersAscending() {
       const userName = JSON.parse(localStorage.getItem("userName"));
-      this.$store.dispatch("getUsersAscending", userName);
+      this.$store.dispatch("getUsersBySort", [
+        userName,
+        this.currentPage,
+        "asc",
+      ]);
     },
     sortUsersDescending() {
       const userName = JSON.parse(localStorage.getItem("userName"));
-      this.$store.dispatch("getUsersDescending", userName);
+      this.$store.dispatch("getUsersBySort", [
+        userName,
+        this.currentPage,
+        "desc",
+      ]);
     },
   },
   computed: {
     userList() {
-      return this.$store.state.Users.users;
+      return this.$store.state.Users.userList;
     },
     userAmount() {
       return this.$store.state.Users.amount;
@@ -94,8 +113,6 @@ export default {
 
   &__wrapper {
     display: flex;
-    justify-content: space-between;
-    padding: 0 50px;
     height: calc(100% - 75px);
   }
 
