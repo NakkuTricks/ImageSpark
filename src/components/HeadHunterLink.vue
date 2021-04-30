@@ -2,10 +2,11 @@
   <a
     href="https://spb.hh.ru/resume/f5daa269ff0854d2570039ed1f677a417a4757"
     target="_blank"
+    title="Ссылка на headHunter"
     class="head-hunter-link"
   >
     <img
-      src="https://upload.wikimedia.org/wikipedia/commons/7/79/HeadHunter_logo.png"
+      src="../assets/images/headhunter-logo-black-and-white.png"
       alt="HeadHunter logo"
       class="head-hunter-link__img"
     />
@@ -20,11 +21,12 @@ export default {
 
 <style lang="scss">
 .head-hunter-link {
-  height: 70px;
-  width: 70px;
+  width: 50px;
+
+  display: flex;
+  align-items: center;
   &__img {
     width: 100%;
-    height: 100%;
   }
 }
 </style>
