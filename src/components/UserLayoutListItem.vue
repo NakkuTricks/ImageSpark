@@ -36,6 +36,10 @@ export default {
   );
   border-radius: 10px;
 
+  &:last-of-type {
+    margin-bottom: 5px;
+  }
+
   transition: 200ms ease;
 
   &:hover {

@@ -15,5 +15,11 @@ export default {
   max-width: 1250px;
   width: 100%;
   height: 80%;
+
+  @media (max-width: 500px) {
+    height: 100%;
+
+    padding: 0 15px 25px;
+  }
 }
 </style>

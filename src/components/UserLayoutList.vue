@@ -42,5 +42,9 @@ export default {
     width: 0;
     height: 0;
   }
+
+  @media (max-width: 500px) {
+    max-height: 250px;
+  }
 }
 </style>

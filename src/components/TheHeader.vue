@@ -30,5 +30,11 @@ export default {
 
   background: linear-gradient(90deg, #f5d7ff 0, #c9f5ff 52.75%, #6bcdff 102.3%);
   border-radius: 30px;
+
+  @media (max-width: 500px) {
+    min-height: 85px;
+    border-radius: 0;
+    margin-bottom: 10px;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <section class="view-users">
-    <base-title>
+    <base-title class="view-users__title">
       <template v-slot>Поиск пользователей github по логину:</template>
     </base-title>
     <base-search
@@ -111,13 +111,34 @@ export default {
   flex-direction: column;
   height: 80%;
 
+  @media (max-width: 500px) {
+    height: auto;
+    padding-bottom: 20px;
+  }
+
+  &__title {
+    @media (max-width: 500px) {
+      margin-bottom: 15px;
+      font-size: 30px;
+    }
+  }
+
   &__wrapper {
     display: flex;
     height: calc(100% - 75px);
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+    }
   }
 
   &__input {
     margin-bottom: 60px;
+
+    @media (max-width: 500px) {
+      align-self: center;
+      margin-bottom: 25px;
+    }
   }
 }
 </style>

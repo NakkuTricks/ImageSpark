@@ -44,6 +44,24 @@ export default {
     z-index: -1;
     right: -15%;
     bottom: -24%;
+
+    @media (max-width: 500px) {
+      width: 180px;
+      height: 180px;
+
+      right: -15%;
+      bottom: 145px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    justify-content: flex-start;
+
+    height: 100%;
+
+    padding: 0;
+
+    overflow-y: scroll;
   }
 }
 </style>

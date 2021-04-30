@@ -49,8 +49,12 @@ export default {
   justify-content: center;
   align-items: center;
 
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
+
   &__avatar {
-    width: 250px;
+    max-width: 250px;
 
     display: flex;
 
@@ -65,6 +69,13 @@ export default {
 
     &:hover {
       transform: scale(1.05);
+    }
+
+    @media (max-width: 500px) {
+      margin-right: 0;
+      margin-bottom: 10px;
+
+      border: 5px solid black;
     }
   }
 

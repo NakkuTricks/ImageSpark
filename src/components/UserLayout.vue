@@ -125,6 +125,12 @@ export default {
 
   margin-right: 10%;
 
+  @media (max-width: 500px) {
+    min-width: auto;
+    width: 100%;
+    margin-right: 0;
+  }
+
   &__wrapper {
     display: flex;
     flex-direction: column;
@@ -173,6 +179,10 @@ export default {
   &__button-wrapper {
     display: flex;
     justify-content: space-evenly;
+
+    @media (max-width: 500px) {
+      margin-bottom: 20px;
+    }
   }
 
   &__button {
