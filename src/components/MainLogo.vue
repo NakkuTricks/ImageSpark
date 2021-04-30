@@ -1,5 +1,8 @@
 <template>
-  <router-link :to="{ name: 'home' }" class="main-logo"
+  <router-link
+    :to="{ name: 'home' }"
+    class="main-logo"
+    title="Переход на главную страницу"
     ><svg
       class="main-logo__img"
       viewBox="0 0 309 63"
